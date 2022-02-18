@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "38883255155",
+    "project_id": "shopapp-ceacb",
+    "storage_bucket": "shopapp-ceacb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38883255155:android:7f83fc23383be60126db06",
+        "android_client_info": {
+          "package_name": "com.codingfreak.shopappfire"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "38883255155-n6ilspdga85gqtpit1hp35qfu2lge0cr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codingfreak.shopappfire",
+            "certificate_hash": "11195c7db21fb57a49173634d241d92b61067267"
+          }
+        },
+        {
+          "client_id": "38883255155-v378eno1672ort6aul4rfb2f27ufdgmf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOuaL96lBc7uh4fCbtHurJxOGmklFad00"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "38883255155-v378eno1672ort6aul4rfb2f27ufdgmf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
