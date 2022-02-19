@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ShopAppFire">
-        <activity android:name=".ForgetPasswordActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".UserProfileActivity"></activity>
+        <activity
+            android:name=".ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".BaseActivity" />
         <activity
             android:name=".RegisterActivity"

@@ -101,7 +101,13 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         Log.d("Ashu" , user.lastName)
         Log.d("Ashu" , user.email)
 
-        startActivity(Intent(this@LoginActivity , MainActivity::class.java))
+        if(user.profileComplete == 0) {
+            val intent = Intent(this@LoginActivity , UserProfileActivity::class.java)
+            startActivity(intent)
+        } else {
+            val intent = Intent(this@LoginActivity , MainActivity::class.java)
+            startActivity(intent)
+        }
         finish()
     }
 }
