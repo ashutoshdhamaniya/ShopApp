@@ -4,9 +4,12 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import com.codingfreak.Firestore.FirestoreClass
+import com.codingfreak.models.User
 import com.codingfreak.utils.MSPButton
 import com.codingfreak.utils.MSPEditText
 import com.codingfreak.utils.MSPTextView
@@ -81,8 +84,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 .addOnCompleteListener { taskId ->
                     run {
                         if (taskId.isSuccessful) {
-                            hideProgressDialog()
-                            showErrorSnackBar("Login Successful !!!", false)
+                            FirestoreClass().getUserDetails(this@LoginActivity)
                         } else {
                             hideProgressDialog()
                             taskId.exception?.message?.let { showErrorSnackBar(it, true) }
@@ -90,5 +92,16 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     }
                 }
         }
+    }
+
+    fun userLoggedInSuccess(user : User) {
+        hideProgressDialog()
+
+        Log.d("Ashu" , user.firstName)
+        Log.d("Ashu" , user.lastName)
+        Log.d("Ashu" , user.email)
+
+        startActivity(Intent(this@LoginActivity , MainActivity::class.java))
+        finish()
     }
 }
