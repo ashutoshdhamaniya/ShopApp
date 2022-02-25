@@ -10,10 +10,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import com.codingfreak.Firestore.FirestoreClass
 import com.codingfreak.models.User
-import com.codingfreak.utils.MSPButton
-import com.codingfreak.utils.MSPEditText
-import com.codingfreak.utils.MSPTextView
-import com.codingfreak.utils.MSPTextViewBold
+import com.codingfreak.utils.*
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : BaseActivity(), View.OnClickListener {
@@ -103,6 +100,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
         if(user.profileComplete == 0) {
             val intent = Intent(this@LoginActivity , UserProfileActivity::class.java)
+            intent.putExtra(Constants.EXTRA_USER_DETAILS , user)
             startActivity(intent)
         } else {
             val intent = Intent(this@LoginActivity , MainActivity::class.java)

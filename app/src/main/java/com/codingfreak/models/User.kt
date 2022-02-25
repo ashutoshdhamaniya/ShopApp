@@ -1,5 +1,9 @@
 package com.codingfreak.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 class User(
     val id : String = "",
     val firstName : String = "",
@@ -9,4 +13,4 @@ class User(
     val mobileNumber : Long = 0,
     val gender : String = "",
     val profileComplete : Int = 0
-)
+) : Parcelable
