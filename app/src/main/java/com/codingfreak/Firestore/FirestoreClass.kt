@@ -7,6 +7,7 @@ import android.util.Log
 import com.codingfreak.models.User
 import com.codingfreak.shopappfire.LoginActivity
 import com.codingfreak.shopappfire.RegisterActivity
+import com.codingfreak.shopappfire.UserProfileActivity
 import com.codingfreak.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -68,19 +69,40 @@ class FirestoreClass {
                     }
                 }
             }.addOnFailureListener { it ->
+                run {
+                    when (activity) {
+                        is LoginActivity -> {
+                            activity.hideProgressDialog()
+                        }
+                    }
+
+                    Log.e(
+                        activity.javaClass.simpleName,
+                        "Error while getting user details.",
+                        it
+                    )
+                }
+            }
+    }
+
+    fun updateUserProfileData(activity: Activity, userHashMap: HashMap<String, Any>) {
+        myFirestore.collection(Constants.USERS).document(getCurrentUserId()).update(userHashMap)
+            .addOnSuccessListener {
+                when (activity) {
+                    is UserProfileActivity -> {
+                        activity.userProfileUpdateSuccess()
+                    }
+                }
+            }.addOnFailureListener {
             run {
                 when (activity) {
-                    is LoginActivity -> {
+                    is UserProfileActivity -> {
                         activity.hideProgressDialog()
                     }
                 }
-
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error while getting user details.",
-                    it
-                )
             }
+
+            Log.d("Ashu", "Error While Updating")
         }
     }
 }

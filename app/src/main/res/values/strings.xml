@@ -42,5 +42,7 @@
     <string name="rb_lbl_male">MALE</string>
     <string name="rb_lbl_female">FEMALE</string>
     <string name="btn_lbl_save">Save</string>
-
+    <string name="read_storage_permission_denied">OOPS !! Permission Denied </string>
+    <string name="image_selection_failed"> Image Selection Failed </string>
+    <string name="msg_profile_update_success">Profile Updated Successfully</string>
 </resources>
