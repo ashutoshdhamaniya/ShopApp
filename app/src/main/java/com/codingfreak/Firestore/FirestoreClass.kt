@@ -3,6 +3,7 @@ package com.codingfreak.Firestore
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.Uri
 import android.util.Log
 import com.codingfreak.models.User
 import com.codingfreak.shopappfire.LoginActivity
@@ -12,6 +13,8 @@ import com.codingfreak.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class FirestoreClass {
 
@@ -94,15 +97,49 @@ class FirestoreClass {
                     }
                 }
             }.addOnFailureListener {
+                run {
+                    when (activity) {
+                        is UserProfileActivity -> {
+                            activity.hideProgressDialog()
+                        }
+                    }
+                }
+
+                Log.d("Ashu", "Error While Updating")
+            }
+    }
+
+    fun uploadImageToCloudFirestore(activity: Activity, imageFileUri: Uri?) {
+        val storageReference: StorageReference = FirebaseStorage.getInstance().reference.child(
+            Constants.USER_PROFILE_IMAGE + System.currentTimeMillis() + "." + Constants.getFileExtension(
+                activity,
+                imageFileUri
+            )
+        )
+
+        storageReference.putFile(imageFileUri!!).addOnSuccessListener {
+            it ->
             run {
-                when (activity) {
-                    is UserProfileActivity -> {
-                        activity.hideProgressDialog()
+                Log.e("Firebase Image Url", it.metadata!!.reference!!.downloadUrl.toString())
+
+                it.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
+                    run {
+                        when(activity) {
+                            is UserProfileActivity -> {
+                                activity.imageUploadSuccess(it.toString())
+                            }
+                        }
                     }
                 }
             }
+        }.addOnFailureListener {
+            when(activity) {
+                is UserProfileActivity -> {
+                    activity.hideProgressDialog()
+                }
+            }
 
-            Log.d("Ashu", "Error While Updating")
+            Log.e(activity.javaClass.simpleName , it.message , it)
         }
     }
 }
