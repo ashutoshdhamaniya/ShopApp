@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -32,6 +33,8 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
     private lateinit var btnSave: MSPButton
 
     private lateinit var userDetails: User
+    private var mySelectedImageUri: Uri? = null
+    private var userProfileImageUrl: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,33 +94,47 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                 R.id.btn_submit -> {
                     if (validateUserProfileDetails()) {
                         //showErrorSnackBar("Fine !!! You can save your details." , false)
-                        val userHashMap = HashMap<String, Any>()
-
-                        val mobileNumber = mobileNumber.text.toString().trim() { it <= ' ' }
-                        val gender = if (rb_male.isChecked) {
-                            Constants.MALE
-                        } else {
-                            Constants.FEMALE
-                        }
-
-                        if(mobileNumber.isNotEmpty()) {
-                            userHashMap[Constants.MOBILE] = mobileNumber.toLong()
-                        }
-                        userHashMap[Constants.GENDER] = gender
-
                         showProgressDialog()
-
-                        FirestoreClass().updateUserProfileData(this , userHashMap)
+                        if (mySelectedImageUri != null)
+                            FirestoreClass().uploadImageToCloudFirestore(this, mySelectedImageUri)
+                        else
+                            updateUserProfileDetails()
                     }
                 }
             }
         }
     }
+    
+    private fun updateUserProfileDetails() {
+        val userHashMap = HashMap<String, Any>()
+
+        val mobileNumber = mobileNumber.text.toString().trim() { it <= ' ' }
+        val gender = if (rb_male.isChecked) {
+            Constants.MALE
+        } else {
+            Constants.FEMALE
+        }
+
+        if(userProfileImageUrl.isNotEmpty()) {
+            userHashMap[Constants.IMAGE] = userProfileImageUrl
+        }
+
+        if (mobileNumber.isNotEmpty()) {
+            userHashMap[Constants.MOBILE] = mobileNumber.toLong()
+        }
+        userHashMap[Constants.GENDER] = gender
+        //showProgressDialog()
+        FirestoreClass().updateUserProfileData(this, userHashMap)
+    }
 
     fun userProfileUpdateSuccess() {
         hideProgressDialog()
-        Toast.makeText(this , resources.getString(R.string.msg_profile_update_success) , Toast.LENGTH_SHORT).show()
-        startActivity(Intent(this@UserProfileActivity , MainActivity::class.java))
+        Toast.makeText(
+            this,
+            resources.getString(R.string.msg_profile_update_success),
+            Toast.LENGTH_SHORT
+        ).show()
+        startActivity(Intent(this@UserProfileActivity, MainActivity::class.java))
         finish()
     }
 
@@ -148,10 +165,10 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             if (requestCode == Constants.PICK_IMAGE_REQUEST_CODE) {
                 if (data != null) {
                     try {
-                        val selectedImageURI = data.data!!
+                        mySelectedImageUri = data.data!!
 //                        findViewById<ImageView>(R.id.iv_user_photo).setImageURI(selectedImageURI)
                         GlideLoader(this).loadUserPicture(
-                            selectedImageURI,
+                            mySelectedImageUri!!,
                             findViewById<ImageView>(R.id.iv_user_photo)
                         )
                     } catch (e: IOException) {
@@ -172,10 +189,14 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                 showErrorSnackBar("Please Enter Mobile Number", true)
                 false
             }
-
             else -> {
                 true
             }
         }
+    }
+
+    fun imageUploadSuccess(imageUrl: String) {
+        userProfileImageUrl = imageUrl
+        updateUserProfileDetails()
     }
 }
