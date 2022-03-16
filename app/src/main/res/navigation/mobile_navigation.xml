@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.codingfreak.shopappfire.ui.fragments.ProductsFragment"
+        android:name="com.codingfreak.shopappfire.ui.fragments.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_products"
-        android:name="com.codingfreak.shopappfire.ui.fragments.DashboardFragment"
+        android:name="com.codingfreak.shopappfire.ui.fragments.ProductsFragment"
         android:label="@string/title_products"
         tools:layout="@layout/fragment_products" />
 
