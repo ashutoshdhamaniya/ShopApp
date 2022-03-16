@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".ui.activities.LoginActivity">
 
     <FrameLayout
         android:id="@+id/fl_header_image"
@@ -20,7 +20,7 @@
             android:src="@drawable/auth_screens_background"
             android:scaleType="fitXY"/>
 
-        <com.codingfreak.utils.MSPTextViewBold
+        <com.codingfreak.shopappfire.utils.MSPTextViewBold
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="My Shop App"
@@ -31,7 +31,7 @@
 
     </FrameLayout>
 
-    <com.codingfreak.utils.MSPTextViewBold
+    <com.codingfreak.shopappfire.utils.MSPTextViewBold
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title">
 
-        <com.codingfreak.utils.MSPEditText
+        <com.codingfreak.shopappfire.utils.MSPEditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_email">
 
-        <com.codingfreak.utils.MSPEditText
+        <com.codingfreak.shopappfire.utils.MSPEditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
             tools:text="123456" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.codingfreak.utils.MSPTextView
+    <com.codingfreak.shopappfire.utils.MSPTextView
         android:id="@+id/tv_forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_password" />
 
-    <com.codingfreak.utils.MSPButton
+    <com.codingfreak.shopappfire.utils.MSPButton
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_login">
 
-        <com.codingfreak.utils.MSPTextView
+        <com.codingfreak.shopappfire.utils.MSPTextView
             android:id="@+id/tv_don_t_have_an_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -146,7 +146,7 @@
             android:textColor="@color/secondaryTextColor"
             android:textSize="@dimen/lbl_text_view_textSize" />
 
-        <com.codingfreak.utils.MSPTextViewBold
+        <com.codingfreak.shopappfire.utils.MSPTextViewBold
             android:id="@+id/tv_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,10 +1,11 @@
-package com.codingfreak.shopappfire
+package com.codingfreak.shopappfire.ui.activities
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-import com.codingfreak.utils.MSPButton
-import com.codingfreak.utils.MSPEditText
+import com.codingfreak.shopappfire.R
+import com.codingfreak.shopappfire.utils.MSPButton
+import com.codingfreak.shopappfire.utils.MSPEditText
 import com.google.firebase.auth.FirebaseAuth
 
 class ForgetPasswordActivity : BaseActivity() {

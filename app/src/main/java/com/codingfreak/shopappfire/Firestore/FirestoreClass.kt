@@ -1,15 +1,15 @@
-package com.codingfreak.Firestore
+package com.codingfreak.shopappfire.Firestore
 
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
-import com.codingfreak.models.User
-import com.codingfreak.shopappfire.LoginActivity
-import com.codingfreak.shopappfire.RegisterActivity
-import com.codingfreak.shopappfire.UserProfileActivity
-import com.codingfreak.utils.Constants
+import com.codingfreak.shopappfire.models.User
+import com.codingfreak.shopappfire.ui.activities.LoginActivity
+import com.codingfreak.shopappfire.ui.activities.RegisterActivity
+import com.codingfreak.shopappfire.ui.activities.UserProfileActivity
+import com.codingfreak.shopappfire.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions

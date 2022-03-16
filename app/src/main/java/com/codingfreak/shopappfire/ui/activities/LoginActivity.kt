@@ -1,16 +1,16 @@
-package com.codingfreak.shopappfire
+package com.codingfreak.shopappfire.ui.activities
 
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import com.codingfreak.Firestore.FirestoreClass
-import com.codingfreak.models.User
-import com.codingfreak.utils.*
+import com.codingfreak.shopappfire.Firestore.FirestoreClass
+import com.codingfreak.shopappfire.R
+import com.codingfreak.shopappfire.models.User
+import com.codingfreak.shopappfire.utils.*
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : BaseActivity(), View.OnClickListener {
@@ -94,16 +94,12 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     fun userLoggedInSuccess(user : User) {
         hideProgressDialog()
 
-        Log.d("Ashu" , user.firstName)
-        Log.d("Ashu" , user.lastName)
-        Log.d("Ashu" , user.email)
-
         if(user.profileComplete == 0) {
             val intent = Intent(this@LoginActivity , UserProfileActivity::class.java)
             intent.putExtra(Constants.EXTRA_USER_DETAILS , user)
             startActivity(intent)
         } else {
-            val intent = Intent(this@LoginActivity , MainActivity::class.java)
+            val intent = Intent(this@LoginActivity , DashboardActivity::class.java)
             startActivity(intent)
         }
         finish()
