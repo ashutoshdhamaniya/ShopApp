@@ -45,4 +45,10 @@
     <string name="read_storage_permission_denied">OOPS !! Permission Denied </string>
     <string name="image_selection_failed"> Image Selection Failed </string>
     <string name="msg_profile_update_success">Profile Updated Successfully</string>
+    <string name="title_activity_dashboard">MainActivity</string>
+    <string name="title_orders">Orders</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_products">Products</string>
+
+    <string name="please_click_back_again">Please Click Back Again to Exit !!</string>
 </resources>

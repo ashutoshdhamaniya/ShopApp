@@ -1,4 +1,4 @@
-package com.codingfreak.shopappfire
+package com.codingfreak.shopappfire.ui.activities
 
 import android.Manifest
 import android.app.Activity
@@ -15,12 +15,13 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.codingfreak.Firestore.FirestoreClass
-import com.codingfreak.models.User
-import com.codingfreak.utils.Constants
-import com.codingfreak.utils.GlideLoader
-import com.codingfreak.utils.MSPButton
-import com.codingfreak.utils.MSPEditText
+import com.codingfreak.shopappfire.Firestore.FirestoreClass
+import com.codingfreak.shopappfire.R
+import com.codingfreak.shopappfire.models.User
+import com.codingfreak.shopappfire.utils.Constants
+import com.codingfreak.shopappfire.utils.GlideLoader
+import com.codingfreak.shopappfire.utils.MSPButton
+import com.codingfreak.shopappfire.utils.MSPEditText
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import java.io.IOException
 
@@ -104,7 +105,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
-    
+
     private fun updateUserProfileDetails() {
         val userHashMap = HashMap<String, Any>()
 
@@ -123,6 +124,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             userHashMap[Constants.MOBILE] = mobileNumber.toLong()
         }
         userHashMap[Constants.GENDER] = gender
+        userHashMap[Constants.COMPLETE_PROFILE] = 1
         //showProgressDialog()
         FirestoreClass().updateUserProfileData(this, userHashMap)
     }

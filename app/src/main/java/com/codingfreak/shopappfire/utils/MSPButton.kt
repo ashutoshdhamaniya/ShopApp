@@ -1,4 +1,4 @@
-package com.codingfreak.utils
+package com.codingfreak.shopappfire.utils
 
 import android.content.Context
 import android.graphics.Typeface

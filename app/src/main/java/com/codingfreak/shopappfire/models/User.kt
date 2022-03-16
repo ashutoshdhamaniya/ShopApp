@@ -1,4 +1,4 @@
-package com.codingfreak.models
+package com.codingfreak.shopappfire.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

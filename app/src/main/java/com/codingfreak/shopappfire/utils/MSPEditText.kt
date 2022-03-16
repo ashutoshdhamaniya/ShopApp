@@ -1,11 +1,12 @@
-package com.codingfreak.utils
+package com.codingfreak.shopappfire.utils
 
 import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.AppCompatEditText
 
-class MSPTextViewBold(context: Context , attributeSet: AttributeSet) : AppCompatTextView(context , attributeSet) {
+class MSPEditText(context: Context , attributeSet: AttributeSet) : AppCompatEditText(context , attributeSet) {
+
 
     init {
         applyFont()

@@ -1,4 +1,4 @@
-package com.codingfreak.shopappfire
+package com.codingfreak.shopappfire.ui.activities
 
 import android.content.Intent
 import android.os.Build
@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.WindowInsets
 import android.view.WindowManager
+import com.codingfreak.shopappfire.R
 
 @Suppress("DEPRECATION")
 class SplashActivity : AppCompatActivity() {
@@ -24,7 +25,7 @@ class SplashActivity : AppCompatActivity() {
         }
 
         Handler().postDelayed({
-            startActivity(Intent(this , LoginActivity::class.java))
+            startActivity(Intent(this , DashboardActivity::class.java))
             finish()
         } , 2500)
 

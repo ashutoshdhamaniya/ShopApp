@@ -1,11 +1,11 @@
-package com.codingfreak.utils
+package com.codingfreak.shopappfire.utils
 
 import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.AppCompatRadioButton
 
-class MSPTextView(context: Context, attributeSet: AttributeSet) : AppCompatTextView(context , attributeSet) {
+class MSPRadioButton(context : Context , attributeSet: AttributeSet) : AppCompatRadioButton(context , attributeSet) {
 
     init {
         applyFont()

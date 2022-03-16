@@ -1,10 +1,11 @@
-package com.codingfreak.shopappfire
+package com.codingfreak.shopappfire.ui.activities
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import com.codingfreak.utils.Constants
+import com.codingfreak.shopappfire.R
+import com.codingfreak.shopappfire.utils.Constants
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

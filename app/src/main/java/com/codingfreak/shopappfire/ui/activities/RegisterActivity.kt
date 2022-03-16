@@ -1,20 +1,18 @@
-package com.codingfreak.shopappfire
+package com.codingfreak.shopappfire.ui.activities
 
-import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
-import com.codingfreak.Firestore.FirestoreClass
-import com.codingfreak.models.User
-import com.codingfreak.utils.MSPButton
-import com.codingfreak.utils.MSPEditText
+import com.codingfreak.shopappfire.Firestore.FirestoreClass
+import com.codingfreak.shopappfire.R
+import com.codingfreak.shopappfire.models.User
+import com.codingfreak.shopappfire.utils.MSPButton
+import com.codingfreak.shopappfire.utils.MSPEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
