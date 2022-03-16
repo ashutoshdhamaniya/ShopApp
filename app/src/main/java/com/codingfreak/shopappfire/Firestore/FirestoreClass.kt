@@ -8,6 +8,7 @@ import android.util.Log
 import com.codingfreak.shopappfire.models.User
 import com.codingfreak.shopappfire.ui.activities.LoginActivity
 import com.codingfreak.shopappfire.ui.activities.RegisterActivity
+import com.codingfreak.shopappfire.ui.activities.SettingsActivity
 import com.codingfreak.shopappfire.ui.activities.UserProfileActivity
 import com.codingfreak.shopappfire.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -69,12 +70,18 @@ class FirestoreClass {
                                 activity.userLoggedInSuccess(user)
                             }
                         }
+                        is SettingsActivity -> {
+                            activity.userDetailsSuccess(user!!)
+                        }
                     }
                 }
             }.addOnFailureListener { it ->
                 run {
                     when (activity) {
                         is LoginActivity -> {
+                            activity.hideProgressDialog()
+                        }
+                        is SettingsActivity -> {
                             activity.hideProgressDialog()
                         }
                     }
@@ -117,14 +124,13 @@ class FirestoreClass {
             )
         )
 
-        storageReference.putFile(imageFileUri!!).addOnSuccessListener {
-            it ->
+        storageReference.putFile(imageFileUri!!).addOnSuccessListener { it ->
             run {
                 Log.e("Firebase Image Url", it.metadata!!.reference!!.downloadUrl.toString())
 
                 it.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
                     run {
-                        when(activity) {
+                        when (activity) {
                             is UserProfileActivity -> {
                                 activity.imageUploadSuccess(it.toString())
                             }
@@ -133,13 +139,13 @@ class FirestoreClass {
                 }
             }
         }.addOnFailureListener {
-            when(activity) {
+            when (activity) {
                 is UserProfileActivity -> {
                     activity.hideProgressDialog()
                 }
             }
 
-            Log.e(activity.javaClass.simpleName , it.message , it)
+            Log.e(activity.javaClass.simpleName, it.message, it)
         }
     }
 }
