@@ -12,7 +12,9 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.codingfreak.shopappfire.Firestore.FirestoreClass
@@ -32,6 +34,9 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
     private lateinit var email: MSPEditText
     private lateinit var mobileNumber: MSPEditText
     private lateinit var btnSave: MSPButton
+    private lateinit var userProfileToolbar : Toolbar
+    private lateinit var toolbarTitle : TextView
+    private lateinit var userImage : ImageView
 
     private lateinit var userDetails: User
     private var mySelectedImageUri: Uri? = null
@@ -40,6 +45,10 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_profile)
+
+        userProfileToolbar = findViewById(R.id.toolbar_user_profile_activity)
+        toolbarTitle = findViewById(R.id.tv_title)
+        userImage = findViewById(R.id.iv_user_photo)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
@@ -60,16 +69,55 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             userDetails = intent.getParcelableExtra<User>(Constants.EXTRA_USER_DETAILS)!!
         }
 
-        firstName.isEnabled = false
-        lastName.isEnabled = false
-        email.isEnabled = false
-
         firstName.setText(userDetails.firstName)
         lastName.setText(userDetails.lastName)
         email.setText(userDetails.email)
+        email.isEnabled = false
+
+        if(userDetails.profileComplete == 0) {
+            toolbarTitle.text = resources.getString(R.string.title_complete_profile)
+
+            firstName.isEnabled = false
+            lastName.isEnabled = false
+
+        } else {
+            setUpActionBar()
+            toolbarTitle.text = resources.getString(R.string.title_edit_profile)
+            GlideLoader(this).loadUserPicture(userDetails.image , userImage)
+
+            if (userDetails.mobileNumber != 0L) {
+                mobileNumber.setText(userDetails.mobileNumber.toString())
+            }
+
+            if (userDetails.gender == Constants.MALE) {
+                rb_male.isChecked = true
+            } else {
+                rb_female.isChecked = true
+            }
+
+        }
+
+//        firstName.isEnabled = false
+//        lastName.isEnabled = false
+//        email.isEnabled = false
+//
+//        firstName.setText(userDetails.firstName)
+//        lastName.setText(userDetails.lastName)
+//        email.setText(userDetails.email)
 
         findViewById<ImageView>(R.id.iv_user_photo).setOnClickListener(this@UserProfileActivity)
         btnSave.setOnClickListener(this@UserProfileActivity)
+    }
+
+    private fun setUpActionBar() {
+        setSupportActionBar(userProfileToolbar)
+        val actionBar = supportActionBar
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_left_24)
+        }
+
+        userProfileToolbar.setNavigationOnClickListener { onBackPressed() }
     }
 
     override fun onClick(view: View?) {
@@ -109,6 +157,16 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
     private fun updateUserProfileDetails() {
         val userHashMap = HashMap<String, Any>()
 
+        val firstName = firstName.text.toString().trim() {it <= ' '}
+        if(firstName != userDetails.firstName) {
+            userHashMap[Constants.FIRST_NAME] = firstName
+        }
+
+        val lastName = lastName.text.toString().trim() { it <= ' '}
+        if(lastName != userDetails.lastName) {
+            userHashMap[Constants.LAST_NAME] = lastName
+        }
+
         val mobileNumber = mobileNumber.text.toString().trim() { it <= ' ' }
         val gender = if (rb_male.isChecked) {
             Constants.MALE
@@ -120,9 +178,14 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             userHashMap[Constants.IMAGE] = userProfileImageUrl
         }
 
-        if (mobileNumber.isNotEmpty()) {
+        if (mobileNumber.isNotEmpty() && mobileNumber != userDetails.mobileNumber.toString()) {
             userHashMap[Constants.MOBILE] = mobileNumber.toLong()
         }
+
+        if(gender.isNotEmpty() && gender != userDetails.gender) {
+            userHashMap[Constants.GENDER] = gender
+        }
+
         userHashMap[Constants.GENDER] = gender
         userHashMap[Constants.COMPLETE_PROFILE] = 1
         //showProgressDialog()
