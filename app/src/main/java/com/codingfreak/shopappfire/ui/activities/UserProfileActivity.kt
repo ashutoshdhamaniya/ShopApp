@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -145,7 +146,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                         //showErrorSnackBar("Fine !!! You can save your details." , false)
                         showProgressDialog()
                         if (mySelectedImageUri != null)
-                            FirestoreClass().uploadImageToCloudFirestore(this, mySelectedImageUri)
+                            FirestoreClass().uploadImageToCloudFirestore(this, mySelectedImageUri , Constants.USER_PROFILE_IMAGE)
                         else
                             updateUserProfileDetails()
                     }
@@ -245,6 +246,8 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                     }
                 }
             }
+        } else if(resultCode == Activity.RESULT_CANCELED) {
+            Log.d("Ashu" , "Image Selection Cancelled")
         }
     }
 
