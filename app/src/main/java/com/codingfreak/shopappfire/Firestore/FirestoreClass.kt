@@ -6,9 +6,11 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
 import androidx.fragment.app.Fragment
+import com.codingfreak.shopappfire.models.CartItem
 import com.codingfreak.shopappfire.models.Product
 import com.codingfreak.shopappfire.models.User
 import com.codingfreak.shopappfire.ui.activities.*
+import com.codingfreak.shopappfire.ui.fragments.DashboardFragment
 import com.codingfreak.shopappfire.ui.fragments.ProductsFragment
 import com.codingfreak.shopappfire.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -191,4 +193,109 @@ class FirestoreClass {
             }
     }
 
+    fun getDashboardItemsList(fragment: DashboardFragment) {
+        myFirestore.collection(Constants.PRODUCTS).get().addOnSuccessListener { it ->
+            val productList: ArrayList<Product> = ArrayList()
+
+            for (i in it.documents) {
+                val product = i.toObject(Product::class.java)
+                product!!.product_id = i.id
+                productList.add(product)
+            }
+
+            fragment.successDashboardItemsList(productList)
+        }.addOnFailureListener {
+            fragment.hideFragmentProgressDialog()
+            Log.d("Ashu", "Error While Featching the Dashboard Products.")
+        }
+    }
+
+    /*
+    * This function is used to delete the product of ProductFragment Screen
+    * */
+    fun deleteProduct(fragment: ProductsFragment, productId: String) {
+        myFirestore.collection(Constants.PRODUCTS).document(productId).delete()
+            .addOnSuccessListener {
+                fragment.productDeleteSuccess()
+            }.addOnFailureListener { it ->
+                fragment.hideFragmentProgressDialog()
+                Log.d("Ashu", "Error While Deleting The Product From Firebase Database")
+            }
+    }
+
+    /*
+    * This Function is used to get the details of the single product for
+    * the ProductDetailsActivity
+    * */
+    fun getProductDetails(activity: ProductDetailsActivity, productId: String) {
+        myFirestore.collection(Constants.PRODUCTS).document(productId).get().addOnSuccessListener {
+            val product = it.toObject(Product::class.java)
+
+            if (product != null) {
+                activity.productDetailsSuccess(product)
+            }
+        }.addOnFailureListener {
+            activity.hideProgressDialog()
+            Log.d("Ashu", "Error While Featching the Product Details")
+        }
+    }
+
+    /*
+    * This function is used to add the product into cart
+    * */
+    fun addCartItems(activity: ProductDetailsActivity, addToCart: CartItem) {
+        myFirestore.collection(Constants.CART_ITEMS).document().set(addToCart, SetOptions.merge())
+            .addOnSuccessListener {
+                activity.addToCartSuccess()
+            }.addOnFailureListener { it ->
+                activity.hideProgressDialog()
+                Log.d("Ashu", "Error While Adding the product into cart !!!")
+            }
+    }
+
+    fun checkIfItemExistInCart(activity: ProductDetailsActivity, productId: String) {
+        myFirestore.collection(Constants.CART_ITEMS)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserId())
+            .whereEqualTo(Constants.PRODUCT_ID, productId).get().addOnSuccessListener {
+                Log.e(activity.javaClass.simpleName, it.documents.toString())
+
+                if (it.documents.size > 0) {
+                    activity.productExistInCart()
+                } else {
+                    activity.hideProgressDialog()
+                }
+
+            }.addOnFailureListener {
+                activity.hideProgressDialog()
+                Log.d("Ashu", "Error While Checking the exisitng cart list")
+            }
+    }
+
+    fun getCartList(activity: Activity) {
+        myFirestore.collection(Constants.CART_ITEMS)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserId()).get().addOnSuccessListener {
+                val cartItemsList: ArrayList<CartItem> = ArrayList()
+
+                for (i in it.documents) {
+                    val cartItem = i.toObject(CartItem::class.java)
+                    cartItem!!.id = i.id
+                    cartItemsList.add(cartItem)
+                }
+
+                when (activity) {
+                    is CartListActivity -> {
+                        activity.successCartItemsList(cartItemsList)
+                    }
+                }
+            }.addOnFailureListener { it ->
+
+                when (activity) {
+                    is CartListActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                }
+
+                Log.d("Ashu", "Error while featching cart items")
+            }
+    }
 }

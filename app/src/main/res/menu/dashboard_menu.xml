@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_cart"
+        android:icon="@drawable/ic_vector_cart"
+        app:showAsAction="always"
+        android:title="@string/action_cart"/>
+
+    <item
         android:id="@+id/settings"
         android:icon="@drawable/ic_outline_settings_24"
         app:showAsAction="always"
