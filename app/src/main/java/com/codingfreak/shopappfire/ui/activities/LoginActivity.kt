@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -95,10 +96,12 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         hideProgressDialog()
 
         if(user.profileComplete == 0) {
+            Log.d("Ashu" , "User Profile Success")
             val intent = Intent(this@LoginActivity , UserProfileActivity::class.java)
             intent.putExtra(Constants.EXTRA_USER_DETAILS , user)
             startActivity(intent)
         } else {
+            Log.d("Ashu" , "Dashboard Success")
             val intent = Intent(this@LoginActivity , DashboardActivity::class.java)
             startActivity(intent)
         }

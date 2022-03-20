@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.codingfreak.shopappfire.Firestore.FirestoreClass
 import com.codingfreak.shopappfire.R
 import com.codingfreak.shopappfire.models.CartItem
@@ -90,10 +91,18 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
         productDescription.text = product.description
         productQuantity.text = product.stock_quantity
 
-        if (FirestoreClass().getCurrentUserId() == product.user_id) {
+        if (product.stock_quantity.toInt() == 0) {
             hideProgressDialog()
+            addToCart.visibility = View.GONE
+
+            productQuantity.text = resources.getString(R.string.lbl_out_of_stock)
+            productQuantity.setTextColor(ContextCompat.getColor(this, R.color.snackBarFailure))
         } else {
-            FirestoreClass().checkIfItemExistInCart(this, productId)
+            if (FirestoreClass().getCurrentUserId() == product.user_id) {
+                hideProgressDialog()
+            } else {
+                FirestoreClass().checkIfItemExistInCart(this, productId)
+            }
         }
     }
 
@@ -127,7 +136,7 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
                     addToCart()
                 }
                 R.id.btn_go_to_cart -> {
-                    startActivity(Intent(this , CartListActivity::class.java))
+                    startActivity(Intent(this, CartListActivity::class.java))
                 }
             }
         }
