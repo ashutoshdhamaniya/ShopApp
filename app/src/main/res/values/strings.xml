@@ -53,7 +53,7 @@
 
     <string name="please_click_back_again">Please Click Back Again to Exit !!</string>
     <string name="action_settings">Settings</string>
-    <string name="action_cart">Cart</string>
+    <string name="action_cart_menu">Cart</string>
 
     <string name="title_settings">Settings</string>
     <string name="lbl_edit">Edit</string>

@@ -298,4 +298,76 @@ class FirestoreClass {
                 Log.d("Ashu", "Error while featching cart items")
             }
     }
+
+    fun getAllProductList(activity: CartListActivity) {
+        myFirestore.collection(Constants.PRODUCTS).get().addOnSuccessListener { it ->
+            Log.d("Ashu", it.documents.toString())
+            val productList: ArrayList<Product> = ArrayList()
+            for (i in it.documents) {
+                val product = i.toObject(Product::class.java)
+                product!!.product_id = i.id
+                productList.add(product)
+            }
+
+            activity.successProductListFromFirestore(productList)
+
+        }.addOnFailureListener {
+            activity.hideProgressDialog()
+            Log.d("Ashu", "Error While getting all products list")
+        }
+    }
+
+    fun removeItemFromCart(context: Context, cart_id: String) {
+        // Cart items collection name
+        myFirestore.collection(Constants.CART_ITEMS)
+            .document(cart_id) // cart id
+            .delete()
+            .addOnSuccessListener {
+
+                // Notify the success result of the removed cart item from the list to the base class.
+                when (context) {
+                    is CartListActivity -> {
+                        context.itemRemovedSuccess()
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+
+                // Hide the progress dialog if there is any error.
+                when (context) {
+                    is CartListActivity -> {
+                        context.hideProgressDialog()
+                    }
+                }
+                Log.e(
+                    context.javaClass.simpleName,
+                    "Error while removing the item from the cart list.",
+                    e
+                )
+            }
+    }
+
+    /*
+    * This function is used to update the cart items
+    * increase
+    * decrease
+    * */
+    fun updateMyCart(context: Context, cart_id: String, itemHashMap: HashMap<String, Any>) {
+        myFirestore.collection(Constants.CART_ITEMS).document(cart_id).update(itemHashMap)
+            .addOnSuccessListener {
+                when (context) {
+                    is CartListActivity -> {
+                        context.itemUpdateSuccess()
+                    }
+                }
+            }.addOnFailureListener { it ->
+                when (context) {
+                    is CartListActivity -> {
+                        context.hideProgressDialog()
+                    }
+                }
+
+                Log.d("Ashu", "Error While Updating the cart items")
+            }
+    }
 }
