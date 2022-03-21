@@ -11,7 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ShopAppFire">
-        <activity android:name=".ui.activities.CartListActivity"></activity>
+        <activity android:name=".ui.activities.SoldProductDetailsActivity"></activity>
+        <activity android:name=".ui.activities.MyOrdersDetailsActivity" />
+        <activity android:name=".ui.activities.CheckoutActivity" />
+        <activity android:name=".ui.activities.AddEditAddressActivity" />
+        <activity android:name=".ui.activities.AddressListActivity" />
+        <activity android:name=".ui.activities.CartListActivity" />
         <activity android:name=".ui.activities.ProductDetailsActivity" />
         <activity
             android:name=".ui.activities.AddProductActivity"
