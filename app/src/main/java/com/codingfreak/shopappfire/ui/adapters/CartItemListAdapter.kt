@@ -16,10 +16,12 @@ import com.codingfreak.shopappfire.utils.Constants
 import com.codingfreak.shopappfire.utils.GlideLoader
 import com.codingfreak.shopappfire.utils.MSPTextView
 import com.codingfreak.shopappfire.utils.MSPTextViewBold
+import kotlinx.android.synthetic.main.item_cart_layout.view.*
 
 class CartItemListAdapter(
     private val context: Context,
-    private val cartItemList: ArrayList<CartItem>
+    private val cartItemList: ArrayList<CartItem>,
+    private val updateCartItem : Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -41,6 +43,12 @@ class CartItemListAdapter(
                 holder.removeProduct.visibility = View.GONE
                 holder.addProduct.visibility = View.GONE
 
+                if(updateCartItem) {
+                    holder.deleteItemFromCart.visibility = View.VISIBLE
+                } else {
+                    holder.deleteItemFromCart.visibility = View.GONE
+                }
+
                 holder.cartItemQuantity.text =
                     context.resources.getString(R.string.lbl_out_of_stock)
 
@@ -51,8 +59,15 @@ class CartItemListAdapter(
                     )
                 )
             } else {
-                holder.removeProduct.visibility = View.VISIBLE
-                holder.addProduct.visibility = View.VISIBLE
+                if(updateCartItem) {
+                    holder.removeProduct.visibility = View.VISIBLE
+                    holder.addProduct.visibility = View.VISIBLE
+                    holder.deleteItemFromCart.visibility = View.VISIBLE
+                } else {
+                    holder.removeProduct.visibility = View.GONE
+                    holder.addProduct.visibility = View.GONE
+                    holder.deleteItemFromCart.visibility = View.GONE
+                }
 
                 holder.cartItemQuantity.setTextColor(
                     ContextCompat.getColor(

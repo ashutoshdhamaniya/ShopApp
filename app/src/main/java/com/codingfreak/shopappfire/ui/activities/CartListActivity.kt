@@ -1,5 +1,6 @@
 package com.codingfreak.shopappfire.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,6 +14,8 @@ import com.codingfreak.shopappfire.R
 import com.codingfreak.shopappfire.models.CartItem
 import com.codingfreak.shopappfire.models.Product
 import com.codingfreak.shopappfire.ui.adapters.CartItemListAdapter
+import com.codingfreak.shopappfire.utils.Constants
+import com.codingfreak.shopappfire.utils.MSPButton
 import com.codingfreak.shopappfire.utils.MSPTextView
 import com.codingfreak.shopappfire.utils.MSPTextViewBold
 
@@ -25,6 +28,7 @@ class CartListActivity : BaseActivity() {
     private lateinit var subTotalText: MSPTextView
     private lateinit var shippingCharge: MSPTextView
     private lateinit var totalAmount: MSPTextViewBold
+    private lateinit var checkoutButton : MSPButton
 
     private lateinit var myProductList: ArrayList<Product>
     private lateinit var myCartListItems: ArrayList<CartItem>
@@ -40,8 +44,15 @@ class CartListActivity : BaseActivity() {
         subTotalText = findViewById(R.id.tv_sub_total)
         shippingCharge = findViewById(R.id.tv_shipping_charge)
         totalAmount = findViewById(R.id.tv_total_amount)
+        checkoutButton = findViewById(R.id.btn_checkout)
 
         setUpActionBar()
+
+        checkoutButton.setOnClickListener {
+            val addressIntent = Intent(this , AddressListActivity::class.java)
+            addressIntent.putExtra(Constants.EXTRA_SELECT_ADDRESS , true)
+            startActivity(addressIntent)
+        }
 
     }
 
@@ -82,7 +93,7 @@ class CartListActivity : BaseActivity() {
             cartRecyclerView.layoutManager = LinearLayoutManager(this@CartListActivity)
             cartRecyclerView.setHasFixedSize(true)
 
-            val cartListAdapter = CartItemListAdapter(this@CartListActivity, cartItemList)
+            val cartListAdapter = CartItemListAdapter(this@CartListActivity, myCartListItems , true)
             cartRecyclerView.adapter = cartListAdapter
 
             var subTotal: Double = 0.0

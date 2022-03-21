@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.widget.Toolbar
 import com.codingfreak.shopappfire.Firestore.FirestoreClass
 import com.codingfreak.shopappfire.R
@@ -22,6 +23,7 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
     private lateinit var mobileNumber: MSPTextView
     private lateinit var logoutButton : MSPButton
     private lateinit var editButton : MSPTextViewBold
+    private lateinit var addressLayout : LinearLayout
 
     private lateinit var userDetails : User
 
@@ -37,6 +39,7 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
         mobileNumber = findViewById(R.id.tv_mobile_number)
         logoutButton = findViewById(R.id.btn_logout)
         editButton = findViewById(R.id.tv_edit)
+        addressLayout = findViewById(R.id.ll_address)
 
         logoutButton.setOnClickListener(this)
         editButton.setOnClickListener(this)
@@ -49,6 +52,7 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
         }
 
         settingsToolbar.setNavigationOnClickListener { onBackPressed() }
+        addressLayout.setOnClickListener(this)
     }
 
     // Get The User Details From Firestore
@@ -94,6 +98,10 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
                         Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(loginIntent)
                     finish()
+                }
+                R.id.ll_address -> {
+                    val addressIntent = Intent(this , AddressListActivity::class.java)
+                    startActivity(addressIntent)
                 }
             }
         }

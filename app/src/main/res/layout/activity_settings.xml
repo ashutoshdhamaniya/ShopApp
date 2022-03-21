@@ -96,7 +96,7 @@
             android:layout_marginTop="@dimen/settings_name_marginTop"
             android:textColor="@color/colorDarkGrey"
             android:textSize="@dimen/settings_name_textSize"
-            tools:text="Denis Panjuta" />
+            tools:text="Ashutosh" />
 
         <com.codingfreak.shopappfire.utils.MSPTextView
             android:id="@+id/tv_gender"
@@ -118,7 +118,7 @@
             android:layout_marginTop="@dimen/settings_info_marginTop"
             android:textColor="@color/secondaryTextColor"
             android:textSize="@dimen/settings_info_textSize"
-            tools:text="denis.panjuta@gmail.com" />
+            tools:text="ashutosh.dhamaniya@gmail.com" />
 
         <com.codingfreak.shopappfire.utils.MSPTextView
             android:id="@+id/tv_mobile_number"
